@@ -126,6 +126,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "static_root"
+STATICFILES_DIR = [ BASE_DIR / "static"],
+
+
 
 AUTH_USER_MODEL = 'core.User'
 # AUTH _USER_MODEL = 'name of the app.Users'
+
+
+# for testing with the django terminal 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = "samuelseunoyewoleprog2020@gmail.com"
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_PORT = '587'
