@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'crm.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'crms',
+        'NAME': 'crm',
         'USER': 'postgres',
         'PORT': 5432,
         'HOST': 'localhost',
@@ -145,3 +145,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_USER = "samuelseunoyewoleprog2020@gmail.com"
 # EMAIL_HOST_PASSWORD = ''
 # EMAIL_PORT = '587'
+
+LOGIN_REDIRECT_URL = '/leads'
+LOGIN_URL = '/login'
