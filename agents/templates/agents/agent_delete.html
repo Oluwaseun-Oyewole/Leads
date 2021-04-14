@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
  
-<a href="{% url 'core:lead_list' %}">Go back to Leads</a>
+<a href="{% url 'agents:agent_list' %}">Go back to agent</a>
 <hr>
-<h2>Are you sure you want to delete this lead?</h2>
+<h2>Are you sure you want to delete this agent?</h2>
   <form method=POST>
     {% csrf_token %}
     {{form.as_p}}
