@@ -2,9 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.db.models.signals import post_save
-# from django.contrib.auth import get_user_model
-# User = get_user_model()
+from django.contrib.auth import get_user_model
 
+# User = get_user_model()
 
 SOURCE_CHOICES = (
   ("Youtube", "Youtube"), 
@@ -13,13 +13,15 @@ SOURCE_CHOICES = (
 )
 
 class User(AbstractUser):
-  pass
+  is_organiser = models.BooleanField(default=True)
+  is_agent = models.BooleanField(default=False)
 
 class UserProfile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
-  def __str__(self):
+  def __str__(self)     :
     return self.user.username  
 
+# using django signals
 def get_post_created_signals(sender, instance, created, **kwargs):
   if created:
     UserProfile.objects.create(user=instance)
@@ -30,7 +32,8 @@ class Lead(models.Model):
   first_name = models.CharField(max_length=50)
   last_name = models.CharField(max_length=50)
   age = models.IntegerField(default=0)
-  agent = models.ForeignKey('Agent', on_delete=models.CASCADE)  
+  organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+  agent = models.ForeignKey('Agent', null=True, blank=True, on_delete=models.SET_NULL)  
   
   def get_absolute_url(self):
     return reverse('core:lead_detail', kwargs={'pk': self.pk})
