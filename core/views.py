@@ -34,21 +34,24 @@ class LeadListView(LoginRequiredMixin, generic.ListView):
   def get_queryset(self):
     user = self.request.user
     if user.is_organiser:
-      queryset= Lead.objects.filter(organisation=user.userprofile)
+      queryset= Lead.objects.filter(organisation=user.userprofile, agent__isnull=False)
     else:
-      queryset=Lead.objects.filter(organisation=user.agent.organisation)
+      queryset=Lead.objects.filter(organisation=user.agent.organisation, agent__isnull=False)
       queryset = queryset.filter(agent__user=user)
     return queryset
 
 # for updating  items in a generic class based view
   def get_context_data(self, **kwargs):
-    context = super(LeadListView, self).get_context_datat(**kwargs)
-    context.update(
-      {
-        
-      }
-    )
-    return context 
+    context = super(LeadListView, self).get_context_data(**kwargs)
+    user = self.request.user
+    if user.is_organiser:
+      queryset= Lead.objects.filter(organisation=user.userprofile, agent__isnull=True)
+      context.update(
+        {
+          "unassigned_leads":queryset
+        }
+      )
+    return context
   
   
 

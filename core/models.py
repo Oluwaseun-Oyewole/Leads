@@ -6,15 +6,17 @@ from django.contrib.auth import get_user_model
 
 # User = get_user_model()
 
-SOURCE_CHOICES = (
-  ("Youtube", "Youtube"), 
-  ("Google", "Google"), 
-  ("Newsletter", 'Newsletter')
-)
-
 class User(AbstractUser):
   is_organiser = models.BooleanField(default=True)
   is_agent = models.BooleanField(default=False)
+
+  
+  def __str__(self):
+    """
+    Return the first_name plus the last_name, with a space in between.
+    """
+    full_name = '%s %s' % (self.first_name, self.last_name)
+    return full_name.strip()
 
 class UserProfile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -35,9 +37,10 @@ class Lead(models.Model):
   organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
   agent = models.ForeignKey('Agent', null=True, blank=True, on_delete=models.SET_NULL)  
   
+  
   def get_absolute_url(self):
     return reverse('core:lead_detail', kwargs={'pk': self.pk})
-
+  
   
   def __str__(self):
     return f'{self.first_name} {self.last_name}'

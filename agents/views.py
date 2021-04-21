@@ -32,7 +32,7 @@ class AgentCreateView(OrganiserAndLoginRequiredMixin, generic.CreateView):
       user.is_organiser =  False
       user.set_password(create_password_code())
       user.save()
-      Agent.objects.create(user=user, organisation=self.request.user.userprofile)
+      Agent.objects.create(user=user, organisation=self.request.user.userprofile)  
       # agent = form.save(commit=False)
       # agent.organisation = self.request.user.userprofile
       # agent.save()

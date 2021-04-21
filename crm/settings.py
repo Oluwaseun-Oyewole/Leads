@@ -131,7 +131,6 @@ STATIC_ROOT = "static_root"
 STATICFILES_DIR = [ BASE_DIR / "static"],
 
 
-
 AUTH_USER_MODEL = 'core.User'
 # AUTH _USER_MODEL = 'name of the app.Users'
 

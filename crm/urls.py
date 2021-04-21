@@ -23,7 +23,6 @@ urlpatterns = [
     path("signup/", Signupview.as_view(), name="signup"),
     path("agents/", include('agents.urls', namespace="agents")),
 ]
-    
 
 # for handling static files
 if settings.DEBUG:
