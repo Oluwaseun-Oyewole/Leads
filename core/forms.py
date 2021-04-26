@@ -14,12 +14,48 @@ class LeadForm(forms.Form):
 class LeadModelForm(forms.ModelForm):
   class Meta:
     model = Lead
-    fields = ('first_name', 'last_name', 'age', 'agent', 'organisation' )
-
+    fields = ('first_name', 'last_name', 'age', 'agent',)
+    #  fields = ('first_name', 'last_ name', 'age', 'agent', 'organisation' )
 
 class CustomUserCreationForm(UserCreationForm):
   class Meta:
     model = User
     fields = ("username",)
     field_classes ={"username":UsernameField}
+
+class AssignAgentForm(forms.Form):
+  agent=forms.ModelChoiceField(queryset=Agent.objects.none())
+  
+  # # populating agent to the assigned view
+  def __init__(self, *args, **kwargs):
+    # print(kwargs)
+    request = kwargs.pop("request")
+    # print(request.user)
+    agents = Agent.objects.filter(organisation=request.user.userprofile)
+    super(AssignAgentForm, self).__init__(*args, **kwargs)
+    self.fields["agent"].queryset=agents
+  
+class LeadCategoryUpdateForm(forms.ModelForm):
+  class Meta:
+    model = Lead
+    fields = ("category",)
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # agent = forms.ChoiceField(choices = (
+  #   ("agent1", "agent1"),
+  #   ("agent2", "agent2")
+  # ))
     

@@ -40,7 +40,7 @@ class AgentCreateView(OrganiserAndLoginRequiredMixin, generic.CreateView):
         subject="You are invited to be an agent",
         message = "You were added as an agent on CRM. Please come login to start working",
         from_email ="test@gmail.com",
-        recipient_list = ["test123@gmail.com",]
+        recipient_list = [user.email,]
       )
       return super(AgentCreateView, self).form_valid(form)
 
