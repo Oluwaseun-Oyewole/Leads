@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'agents',
-    'dark'
+    
+    # third party apps
+    'dark',
+    'crispy_forms',
+    "crispy_tailwind",
 ]
 
 MIDDLEWARE = [
@@ -81,7 +85,7 @@ WSGI_APPLICATION = 'crm.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'crm',
+        'NAME': 'newcrm',
         'USER': 'postgres',
         'PORT': 5432,
         'HOST': 'localhost',
@@ -150,4 +154,10 @@ STATICFILES_DIR = [ BASE_DIR / "static"],
 STATIC_ROOT = "static"
 
 LOGIN_REDIRECT_URL = '/leads'
+LOGOUT_REDIRECT_URL = '/'
+
 LOGIN_URL = '/login'
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"

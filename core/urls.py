@@ -13,5 +13,4 @@ urlpatterns = [
   path("categories/", views.CategoryListView.as_view(), name="category_list"), 
   path("categories/<int:pk>/", views.CategoryDetailView.as_view(), name="category_detail"),  
   path("<int:pk>/category/", views.CategoryUpdateView.as_view(), name="category_update"),  
-  
 ]

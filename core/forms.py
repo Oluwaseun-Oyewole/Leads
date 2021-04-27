@@ -14,7 +14,7 @@ class LeadForm(forms.Form):
 class LeadModelForm(forms.ModelForm):
   class Meta:
     model = Lead
-    fields = ('first_name', 'last_name', 'age', 'agent',)
+    fields = ('first_name', 'last_name', 'age', 'agent', 'description', 'phone_number', 'email')
     #  fields = ('first_name', 'last_ name', 'age', 'agent', 'organisation' )
 
 class CustomUserCreationForm(UserCreationForm):
@@ -38,7 +38,7 @@ class AssignAgentForm(forms.Form):
 class LeadCategoryUpdateForm(forms.ModelForm):
   class Meta:
     model = Lead
-    fields = ("category",)
+    fields = ("category" ,)
 
   
   

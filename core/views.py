@@ -66,7 +66,6 @@ class LeadDetailView(LoginRequiredMixin, generic.DetailView):
   template_name = 'lead_detail.html'
   context_object_name = 'leads'
   
-  
   def get_queryset(self):
     user = self.request.user
     return  Lead.objects.filter(organisation=user.userprofile)
@@ -77,7 +76,7 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
   context_object_name="category"
   
   def get_queryset(self):
-    user = self.request.user
+    user = self.request.user 
     if user.is_organiser:
       queryset= Category.objects.filter(organisation=user.userprofile)
     else:
@@ -87,15 +86,15 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
 
   def get_context_data(self, **kwargs):
       context = super(CategoryDetailView, self).get_context_data(**kwargs)
-      qs = Lead.objects.filter(category=self.get_object())
+      # qs = Lead.objects.filter(category=self.get_object())
       # this syntax only works because we decaled a ForeignKey to the category model
       # self.get_object().lead_set.all()
       leads = self.get_object().leads.all()
-      print(qs)
+      # print(qs)
       context.update({ "leads":leads})
       return context
-    
-    
+
+
 # def lead_create(request):
 #   form = LeadForm()
 #   print(request.POST)
@@ -131,6 +130,9 @@ class LeadCreateView(OrganiserAndLoginRequiredMixin, generic.CreateView):
     return reverse('core:lead_list')
   
   def form_valid(self, form):
+      user =form.save(commit=False)
+      user.organisation=self.request.user.userprofile
+      user.save()
       send_mail(
         subject="A lead has ben created", message="Go to the site  to see a new lead", from_email="test123@gmail.com", recipient_list=["test1234@gmail.com"]
         )
