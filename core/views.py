@@ -256,3 +256,46 @@ class CategoryUpdateView(LoginRequiredMixin, generic.UpdateView):
   
   def get_success_url(self):
       return reverse('core:lead_detail', kwargs={"pk":self.get_object().id})
+
+
+class CategoryDeleteView(OrganiserAndLoginRequiredMixin, generic.DeleteView):
+    template_name = "category_delete.html"
+
+    def get_success_url(self):
+        return reverse("core:category_list")
+
+    def get_queryset(self):
+        user = self.request.user
+        # initial queryset of leads for the entire organisation
+        if user.is_organiser:
+            queryset = Category.objects.filter(
+                organisation=user.userprofile
+            )
+        else:
+            queryset = Category.objects.filter(
+                organisation=user.agent.organisation
+            )
+        return queryset
+
+
+class CategoryCreateView(OrganiserAndLoginRequiredMixin, generic.CreateView):
+  form_class = CategoryCreationForm
+  template_name ="category_create.html"
+  
+  def get_success_url(self):
+    return reverse("core:category_list")
+  
+  
+  def get_queryset(self):
+        user = self.request.user
+        # initial queryset of leads for the entire organisation
+        if user.is_organiser:
+            queryset = Category.objects.filter(
+                organisation=user.userprofile
+            )
+        else:
+            queryset = Category.objects.filter(
+                organisation=user.agent.organisation
+            )
+        return queryset
+    

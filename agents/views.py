@@ -7,7 +7,6 @@ from django.core.mail import send_mail
 import random
 import string
 
-
 def create_password_code():
   return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
