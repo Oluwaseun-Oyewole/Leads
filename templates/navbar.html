@@ -12,7 +12,7 @@
         <a href="{% url 'agents:agent_list' %}" class="mr-5 hover:text-gray-900">Agents</a>
         {% endif %}
         <a href="{% url 'core:lead_list' %}" class="mr-5 hover:text-gray-900">Leads</a>
-      {% endif %}
+      {% endif %} 
     </nav>
     {% if request.user.is_authenticated %}
       Logged in as: {{ request.user.username }}

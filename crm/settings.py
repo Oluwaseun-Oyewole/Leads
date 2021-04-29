@@ -18,11 +18,17 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-environ.Env.read_env()
+# environ.Env.read_env()
+
+# let create environment variable
+READ_DOT_ENV_FILE = env.bool("READ_DOT_ENV_FILE", default=False)
+if READ_DOT_ENV_FILE:
+    environ.Env.read_env()
+
 
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
-print(DEBUG, SECRET_KEY)
+
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +37,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +54,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -84,10 +92,10 @@ WSGI_APPLICATION = 'crm.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'newcrm',
-        'USER': 'postgres',
-        'PORT': 5432,
-        'HOST': 'localhost',
+        'NAME': env("DB_NAME"),
+        'USER': env("DB_USER"),
+        'PORT': env("DB_PORT"), 
+        'HOST': env("DB_HOST"),
         'PASSWORD': os.environ.get('EMAIL_PASSWORD')
     }
 }
@@ -125,36 +133,32 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-
-
 AUTH_USER_MODEL = 'core.User'
 # AUTH _USER_MODEL = 'name of the app.Users'
-
-
 # for testing with the django terminal 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = False
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = "findseunoyewole@gmail.com"
-# EMAIL_HOST_PASSWORD = '09028471934githubgit'
-# EMAIL_PORT = '587'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = "findseunoyewole@gmail.com"
+EMAIL_HOST_PASSWORD = '09028471934githubGit@'
+EMAIL_PORT = '587'
 
 
 STATIC_URL = '/static/'
 STATICFILES_DIR = [ BASE_DIR / "static"],
 STATIC_ROOT = "static_root"
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = '/leads'
 LOGOUT_REDIRECT_URL = '/'
+
 
 LOGIN_URL = '/login'
 
