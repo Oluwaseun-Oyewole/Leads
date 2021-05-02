@@ -89,6 +89,8 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
       # qs = Lead.objects.filter(category=self.get_object())
       # this syntax only works because we decaled a ForeignKey to the category model
       # self.get_object().lead_set.all()
+      
+      # by using related name
       leads = self.get_object().leads.all()
       # print(qs)
       context.update({ "leads":leads})
