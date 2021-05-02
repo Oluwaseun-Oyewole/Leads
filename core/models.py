@@ -31,7 +31,6 @@ def get_post_created_signals(sender, instance, created, **kwargs):
   
 post_save.connect(get_post_created_signals, sender=User)
 
-
 class Lead(models.Model):
   first_name = models.CharField(max_length=50)
   last_name = models.CharField(max_length=50)
@@ -57,12 +56,9 @@ class Agent(models.Model):
   def __str__(self):
     return self.user.username
 
-
 class Category(models.Model):
   name = models.CharField(max_length=30)
-  organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-  
-  
+  organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE) 
   
   def __str__(self):
     return self.name

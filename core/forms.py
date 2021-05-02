@@ -26,7 +26,7 @@ class CustomUserCreationForm(UserCreationForm):
 class AssignAgentForm(forms.Form):
   agent=forms.ModelChoiceField(queryset=Agent.objects.none())
   
-  # # populating agent to the assigned view
+  # # populating agent or agents to the assigned view
   def __init__(self, *args, **kwargs):
     # print(kwargs)
     request = kwargs.pop("request")
