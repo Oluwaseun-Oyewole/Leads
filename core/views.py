@@ -62,7 +62,7 @@ class LeadListView(LoginRequiredMixin, generic.ListView):
 #   return render(request, 'lead_detail.html', context)
 
 
-class LeadDetailView(LoginRequiredMixin, generic.DetailView):
+class LeadDetailView(OrganiserAndLoginRequiredMixin, generic.DetailView):
   template_name = 'lead_detail.html'
   context_object_name = 'leads'
   
